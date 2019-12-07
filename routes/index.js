@@ -59,7 +59,9 @@ router.get('/machine/all',(req,res,next)=>{
 		res.json(data);
 	})
 });
-
+router.get('/error',(req,res,next)=>{
+	res.json("not found");
+})
 router.post('/machine/register', (req,res,next) =>{
 
 	mname = req.body.mname;
@@ -106,7 +108,7 @@ router.post('/booking/register', (req,res,next) =>{
 router.get('/booking/user/:id', (req,res,next) =>{
 
 	userid = req.params.id;
-	Booking.findAll({"userid":userid}, (err, data)=>{
+	Booking.find({"userid":userid}, (err, data)=>{
 		if(err)
 			res.json(err);
 		
