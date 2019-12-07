@@ -6,7 +6,7 @@ var Booking = require('../models/booking');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.json({ title: 'Express' });
+  res.json({ title: 'Hello Azure' });
 });
 router.post('/user/register', function(req,res,next){
 	//name = req.body.name;
