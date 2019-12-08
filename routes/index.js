@@ -69,7 +69,7 @@ router.post('/machine/register', (req,res,next) =>{
 	mowner = req.body.mowner;
 	mprice = req.body.mprice;
 	mdate = req.body.mdate;
-
+	console.log(req.body.mname);
 	let machine = new Machine();
 	machine.mname = mname;
 	machine.mtype  = mtype;
@@ -89,21 +89,43 @@ router.post('/machine/register', (req,res,next) =>{
 
 router.post('/booking/register', (req,res,next) =>{
 	
+
 	userid = req.body.userid;
 	mid = req.body.mid;
 	bdate = req.body.bdate;
 	mname = req.body.mname;
-	let booking = new Booking();
-	booking.userid = userid;
-	booking.machine  = mid;
-	booking.booking = bdate;
-	booking.mname = mname;
-	booking.save((err,data)=>{
-		if (err)
-			res.json(err)
+	Machine.findOne({"_id":mid},(err, data)=>{
+		if(err)
+			res.json(err);
+		if(data){
+
+			bookingDate = new Date(bdate);
+			machineDate = new Date(data.mdate);
+			console.log(data);
+			console.log("bd",bookingDate);
+			console.log("md", machineDate);
+			if(bookingDate < machineDate){
+				let booking = new Booking();
+				booking.userid = userid;
+				booking.machine  = mid;
+				booking.booking = bdate;
+				booking.mname = mname;
+				booking.save((err,data)=>{
+					if (err)
+						res.json(err)
+					
+					res.json(data);
+				});
+			}else{
+				res.json({'message': 'Already Booked', 'status':'406'})
+			}
+		}
+		else
+			res.json({'message': "Doesn't Exist", 'status': "404"});
 		
-		res.json(data);
+
 	});
+	
 });
 router.get('/booking/user/:id', (req,res,next) =>{
 
