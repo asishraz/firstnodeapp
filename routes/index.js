@@ -117,6 +117,7 @@ router.post('/booking/register', (req,res,next) =>{
 					res.json(data);
 				});
 			}else{
+				res.status(406);
 				res.json({'message': 'Already Booked', 'status':'406'})
 			}
 		}
