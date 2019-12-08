@@ -68,7 +68,7 @@ router.post('/machine/register', (req,res,next) =>{
 	mtype = req.body.mtype;
 	mowner = req.body.mowner;
 	mprice = req.body.mprice;
-	mdate = req.body.mdate;
+	mdate = "2020-02-07"
 	console.log(req.body.mname);
 	let machine = new Machine();
 	machine.mname = mname;
@@ -104,7 +104,7 @@ router.post('/booking/register', (req,res,next) =>{
 			console.log(data);
 			console.log("bd",bookingDate);
 			console.log("md", machineDate);
-			if(bookingDate < machineDate){
+			if(bookingDate <= machineDate){
 				let booking = new Booking();
 				booking.userid = userid;
 				booking.machine  = mid;
